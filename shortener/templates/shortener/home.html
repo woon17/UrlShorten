@@ -1,0 +1,62 @@
+{% extends 'shortener/base.html' %} 
+{% block title %}Shortener Home Page{% endblock %}
+
+{% block body %}
+
+<style>
+h1 {
+  color: blue;
+  font-family: verdana;
+  font-size: 300%;
+}
+</style>
+
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="card-header text-center py-4">
+        <h1>URL Shortner Page <i class="fas fa-link px-2"></i></h1>
+      </div>
+    </div>
+  </section>
+
+  <section class="content">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+   <div class="col-sm-5" style="float:none;margin:auto;">
+    <div class="card card-body">
+      <div>
+        <form action="" method="POST">
+          {% csrf_token %}
+          <div class="row g-1">
+            <label for="longUrl"> Enter a long URL to make a short URL</label>
+            <script>
+              console.log("test")
+            </script>
+            {% if longUrl is not None %}
+              <input type="url" id="longUrl" name="longUrl" class="form-control" style="vertical-align: middle;height:50px;width:100%" placeholder="Place your long URL" value="{{longUrl}}">
+            {% else %}
+              <input type="url" id="longUrl" name="longUrl" class="form-control" style="vertical-align: middle;height:50px;width:100%" placeholder="Place your long URL">
+            {% endif %}
+            <label for="domain">Customize your link</label>
+
+            <select id="domain" name="domain" class="form-control" style="vertical-align: middle;height:50px;width:40%;">
+              {% comment %} <option value= "--" >--</option> {% endcomment %}
+              {% for d in domains %}
+                {% if domain != d %}
+                  <option value= "{{d}}" >{{d}}</option>
+                {% else %}
+                  <option value= "{{d}}" selected="True">{{d}}</option>
+                {% endif %}
+              {% endfor %} 
+            </select>
+            <input type="text" id="customShortenPart" name="customShortenPart" class="form-control" style="vertical-align: middle;height:50px;width:60%" placeholder="(Optional) Customize your link">
+            <button class="btn btn-primary" style="vertical-align: middle;height:50px;width:100%;" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+   </div>
+</div>
+{% endblock body %}
+
