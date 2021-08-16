@@ -1,3 +1,4 @@
-mysite/env
+env
 *.pyc
 *.sqlite3
+shortener/migrations/*.py
