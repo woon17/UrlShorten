@@ -2,13 +2,10 @@
 {% block title %}Shortener Home Page{% endblock %}
 
 {% block body %}
-
-
-
 <div class="container">
   <section class="content-header">
     <div class="container-fluid">
-      <div class="card-header text-center py-4">
+      <div class="card-header text-center p-3 bg-success my-3 border rounded">
         <h1>URL Shortner Page <i class="fas fa-link px-2"></i></h1>
       </div>
     </div>
@@ -16,8 +13,8 @@
 
   <section class="content">
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-   <div class="col-sm-5" style="float:none;margin:auto;">
-    <div class="card card-body">
+   <div class="col-sm-5" style="float:none;margin:auto;background-color: #f5f3f3;border-radius:2%;">
+    <div class="card card-body" style="background-color:white;border-radius:2%;">
       <div>
         <form action="" method="POST" id="myForm">
           {% csrf_token %}
@@ -45,15 +42,23 @@
       </div>
     </div>
 
+    {% if errorMessage %}
+    <div class="alert alert-danger" role="alert">
+      <h2 class="text">ShortenerUrl: </h2>
+      <p>{{errorMessage}}</p>
+    </div>
+    {% endif %}
+
     {% if shortener is not None %}
-    <div class="mx-auto text-center mt-5">
-      <h2 class="text">Shortened Url: </h2>
+    <div class="alert alert-success">
+      <h2 class="text">ShortenerUrl: </h2>
       <p>Copy and share to your friends</p>
       {% if customShortenPart is not None and customShortenPart != "" %}
         <a href="{{domain}}{{shortener.custom_short_url}}" id="shortenUrl" class="form-control">{{domain}}{{shortener.custom_short_url}}</a>
       {% else %}
         <a href="{{domain}}{{shortener.short_url}}" id="shortenUrl" class="form-control">{{domain}}{{shortener.short_url}}</a>
       {% endif %}
+      <br>
       <button onclick="copyToClipboard('shortenUrl')">Copy text</button>
     </div>
     {% endif %}
@@ -76,4 +81,3 @@ function copyToClipboard(id) {
   }
 </script>
 {% endblock body %}
-

@@ -51,6 +51,8 @@ def index(request):
 
     except Exception as e:
         print(f'Exception: {e}')
+        context["errorMessage"]="Please provide a different customize input."
+
 
     return render(request, 'shortener/home.html', context)
 
