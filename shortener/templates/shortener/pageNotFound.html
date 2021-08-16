@@ -1,0 +1,34 @@
+{% extends 'shortener/base.html' %} 
+{% block title %}Shortener Home Page{% endblock %}
+
+{% block body %}
+<div class="container">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="card-header text-center py-4">
+        <h1>URL Shortner Page <i class="fas fa-link px-2"></i></h1>
+      </div>
+    </div>
+  </section>
+  <br><br>
+  <section>
+    <div class="row">
+        <div class="col-sm-12 text-center" style="float:none;margin:auto;">
+            <div class="error-template">
+                <h3>
+                    404 Not Found</h3>
+                <div class="error-details">
+                    Hmmm... can't reach this page, make sure the shortenUrl is valid
+                </div><br>
+                <div class="error-actions">
+                    <a href="http://127.0.0.1:8000/" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
+                        Take Me Home </a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+</div>
+
+{% endblock body %}
+

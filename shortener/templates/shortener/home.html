@@ -3,15 +3,9 @@
 
 {% block body %}
 
-<style>
-h1 {
-  color: blue;
-  font-family: verdana;
-  font-size: 300%;
-}
-</style>
 
-<div class="content-wrapper">
+
+<div class="container">
   <section class="content-header">
     <div class="container-fluid">
       <div class="card-header text-center py-4">
@@ -25,38 +19,61 @@ h1 {
    <div class="col-sm-5" style="float:none;margin:auto;">
     <div class="card card-body">
       <div>
-        <form action="" method="POST">
+        <form action="" method="POST" id="myForm">
           {% csrf_token %}
           <div class="row g-1">
             <label for="longUrl"> Enter a long URL to make a short URL</label>
-            <script>
-              console.log("test")
-            </script>
-            {% if longUrl is not None %}
-              <input type="url" id="longUrl" name="longUrl" class="form-control" style="vertical-align: middle;height:50px;width:100%" placeholder="Place your long URL" value="{{longUrl}}">
-            {% else %}
-              <input type="url" id="longUrl" name="longUrl" class="form-control" style="vertical-align: middle;height:50px;width:100%" placeholder="Place your long URL">
-            {% endif %}
+            <input type="url" id="longUrl" required="required" name="longUrl" class="form-control" style="vertical-align: middle;height:50px;width:100%" placeholder="Place your long URL" {% if longUrl is not None and  longUrl != "" %} value="{{longUrl}}" {% endif %}>
+            
             <label for="domain">Customize your link</label>
-
             <select id="domain" name="domain" class="form-control" style="vertical-align: middle;height:50px;width:40%;">
               {% comment %} <option value= "--" >--</option> {% endcomment %}
               {% for d in domains %}
-                {% if domain != d %}
+                {% if domain != d or domain is None %}
                   <option value= "{{d}}" >{{d}}</option>
                 {% else %}
                   <option value= "{{d}}" selected="True">{{d}}</option>
                 {% endif %}
               {% endfor %} 
             </select>
-            <input type="text" id="customShortenPart" name="customShortenPart" class="form-control" style="vertical-align: middle;height:50px;width:60%" placeholder="(Optional) Customize your link">
-            <button class="btn btn-primary" style="vertical-align: middle;height:50px;width:100%;" type="submit">Submit</button>
+            <input type="text" id="customShortenPart" name="customShortenPart" class="form-control" style="vertical-align: middle;height:50px;width:60%" placeholder="(Optional) Customize your link" {% if customShortenPart is not None %}value="{{customShortenPart}}"{% endif %}>
+            
+            <button class="btn btn-primary" style="vertical-align: middle;height:50px;width:69%;" type="submit">Submit</button>
+            <input class="btn btn-success" style="margin-left:5px;vertical-align: middle;height:50px;width:30%;" type="reset" value="Shorten Another" onClick="window.location.reload()">
           </div>
         </form>
       </div>
     </div>
+
+    {% if shortener is not None %}
+    <div class="mx-auto text-center mt-5">
+      <h2 class="text">Shortened Url: </h2>
+      <p>Copy and share to your friends</p>
+      {% if customShortenPart is not None and customShortenPart != "" %}
+        <a href="{{domain}}{{shortener.custom_short_url}}" id="shortenUrl" class="form-control">{{domain}}{{shortener.custom_short_url}}</a>
+      {% else %}
+        <a href="{{domain}}{{shortener.short_url}}" id="shortenUrl" class="form-control">{{domain}}{{shortener.short_url}}</a>
+      {% endif %}
+      <button onclick="copyToClipboard('shortenUrl')">Copy text</button>
+    </div>
+    {% endif %}
   </section>
    </div>
 </div>
+<script>
+function copyToClipboard(id) {
+  var from = document.getElementById(id);
+  var range = document.createRange();
+  window.getSelection().removeAllRanges();
+  range.selectNode(from);
+  window.getSelection().addRange(range);
+  document.execCommand('copy');
+  window.getSelection().removeAllRanges();
+ }
+
+  if ( window.history.replaceState ) {
+      window.history.replaceState( null, null, window.location.href );
+  }
+</script>
 {% endblock body %}
 
