@@ -35,7 +35,7 @@ def index(request):
                 if customShortenPart != "":
                     updateShortener(shortenerObj[0], customShortUrl=customShortenPart)
                 else:
-                    if shortenerObj[0].short_url is None:
+                    if shortenerObj[0].random_short_url is None:
                         shortenPart = createRandomShortenPart()
                         updateShortener(shortenerObj[0], shortUrl=shortenPart)
                 context["shortener"]=shortenerObj[0]
@@ -59,8 +59,8 @@ def index(request):
 
 def redirectUrlview(request, shortened_part):
     try:
-        if (Shortener.objects.filter(short_url=shortened_part).exists()):
-            shortener = Shortener.objects.get(short_url=shortened_part)
+        if (Shortener.objects.filter(random_short_url=shortened_part).exists()):
+            shortener = Shortener.objects.get(random_short_url=shortened_part)
         else:
             shortener = Shortener.objects.get(custom_short_url=shortened_part)
     except Shortener.DoesNotExist:

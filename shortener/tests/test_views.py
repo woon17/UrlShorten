@@ -10,9 +10,9 @@ class TestViews(TestCase):
         self.index_url = reverse('index')
         self.newLongUrl = "https://www.djangoproject.com/download/"
         self.newCustomShortUrl = "download"
-        self.testShortener = Shortener.objects.create(long_url="https://docs.djangoproject.com/en/3.2/topics/db/models/", short_url="asdfgds", custom_short_url="testingOnly")
-        self.testShortenerNoRandomShortUrl = Shortener.objects.create(long_url="https://www.djangoproject.com/weblog/", short_url=None, custom_short_url="weblog")
-        self.redirect_shortUrl = reverse('redirect', args=[self.testShortener.short_url])
+        self.testShortener = Shortener.objects.create(long_url="https://docs.djangoproject.com/en/3.2/topics/db/models/", random_short_url="asdfgds", custom_short_url="testingOnly")
+        self.testShortenerNoRandomShortUrl = Shortener.objects.create(long_url="https://www.djangoproject.com/weblog/", random_short_url=None, custom_short_url="weblog")
+        self.redirect_shortUrl = reverse('redirect', args=[self.testShortener.random_short_url])
         self.redirect_customUrl = reverse('redirect', args=[self.testShortener.custom_short_url])
 
     # longUrl is none 
@@ -108,7 +108,7 @@ class TestViews(TestCase):
         self.assertTemplateUsed(response, "shortener/home.html")
 
     def test_redirectUrlview_shortUrl(self):
-        # success_redirect by short_url
+        # success_redirect by random_short_url
         response = self.client.get(self.redirect_shortUrl)
         self.assertEqual(response.status_code, 302)
         self.assertTemplateNotUsed(response, "shortener/base.html")

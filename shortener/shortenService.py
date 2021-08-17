@@ -10,7 +10,7 @@ def createRandomShortenPart():
     shortenPart = ''.join(choice(chars) for _ in range(SHORTEN_SIZE))
     print(shortenPart)
 
-    if Shortener.objects.filter(short_url=shortenPart).exists():
+    if Shortener.objects.filter(random_short_url=shortenPart).exists():
         createRandomShortenPart()
     return shortenPart
 
@@ -18,7 +18,7 @@ def saveShortener(longUrl, shortUrl=None, customShortUrl=None):
     if shortUrl is not None:
         Shortener.objects.create(
             long_url=longUrl,
-            short_url=shortUrl
+            random_short_url=shortUrl
         )
     if customShortUrl is not None:
         Shortener.objects.create(
@@ -28,7 +28,7 @@ def saveShortener(longUrl, shortUrl=None, customShortUrl=None):
 
 def updateShortener(shortener, shortUrl=None, customShortUrl=None):
     if shortUrl is not None:
-        shortener.short_url=shortUrl
+        shortener.random_short_url=shortUrl
     if customShortUrl is not None:
         shortener.custom_short_url=customShortUrl
     shortener.save()
