@@ -6,7 +6,7 @@ from string import ascii_lowercase, digits
 SHORTEN_SIZE = 10
 
 def createRandomShortenPart():
-    chars = ascii_lowercase + digits + '*!@#$%^&*()_'
+    chars = ascii_lowercase + digits + '*!@#$^&_'
     shortenPart = ''.join(choice(chars) for _ in range(SHORTEN_SIZE))
     print(shortenPart)
 

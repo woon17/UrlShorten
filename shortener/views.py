@@ -24,7 +24,7 @@ def index(request):
         print(f'longUrl: {longUrl}; customShortenPart: {customShortenPart}; domain: {domain};\n\n')
         context = {"longUrl": longUrl, "customShortenPart": customShortenPart, "domains": [DOMAIN1, DOMAIN2], "domain": domain}
 
-        if longUrl is "" or longUrl is None:
+        if longUrl == "" or longUrl is None:
             return render(request, 'shortener/home.html', context)
         else:
             shortenerObj=Shortener.objects.filter(long_url=longUrl)
@@ -64,5 +64,6 @@ def redirectUrlview(request, shortened_part):
         else:
             shortener = Shortener.objects.get(custom_short_url=shortened_part)
     except Shortener.DoesNotExist:
+        # raise Http404('This shorten_url does not exist')
         return render(request, "shortener/pageNotFound.html")
     return HttpResponseRedirect(shortener.long_url)
