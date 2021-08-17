@@ -123,7 +123,7 @@ class TestViews(TestCase):
         self.assertTemplateNotUsed(response, "shortener/pageNotFound.html")
 
         # fail_redirect due to no-existing data
-        response = self.client.get("/notexisting")
+        response = self.client.get("/notexisting/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "shortener/base.html")
         self.assertTemplateUsed(response, "shortener/pageNotFound.html")

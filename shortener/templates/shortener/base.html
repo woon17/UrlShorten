@@ -10,7 +10,15 @@
 <!-- CSS only -->
 <link rel="stylesheet" type="text/css" href="{% static 'shortener/style.css' %}">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-  {% block appHeader %}{% endblock %}
+  {% block appHeader %}  
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="card-header text-center p-3 bg-success my-3 border rounded">
+        <h1>URL Shortner Page <i class="fas fa-link px-2"></i></h1>
+      </div>
+    </div>
+  </section>
+  {% endblock %}
 </head>
   <body>
    
