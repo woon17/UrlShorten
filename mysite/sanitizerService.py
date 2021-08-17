@@ -16,7 +16,6 @@ def sanitize(dirtyString):
         dirtyString = dirtyString.replace("%", "")
         dirtyString = dirtyString.replace("?", "")
         dirtyString = dirtyString.replace("|", "")
-        dirtyString = dirtyString.replace(":", "")
         dirtyString = dirtyString.replace("~", "")
         dirtyString = dirtyString.replace("+", "")
         dirtyString = dirtyString.replace("-", "")
