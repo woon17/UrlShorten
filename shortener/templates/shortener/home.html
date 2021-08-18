@@ -25,7 +25,7 @@
                 {% endif %}
               {% endfor %} 
             </select>
-            <input type="text" id="customShortenPart" name="customShortenPart" class="form-control" pattern="^[a-zA-Z0-9*!@$_^]+$" maxlength="10" style="margin-left:5px;vertical-align: middle;height:50px;width:34%" placeholder="(Optional) Customize your link" oninvalid="this.setCustomValidity('Allowed special characters is * ! @ $ _ ^')" oninput="setCustomValidity('')" {% if customShortenPart is not None %} value="{{customShortenPart}}"{% endif %}>
+            <input type="text" id="customShortenPart" name="customShortenPart" class="form-control" pattern="^[a-zA-Z0-9*!@$_^]+$" maxlength="10" style="margin-left:5px;vertical-align: middle;height:50px;width:34%" placeholder="Customize url" oninvalid="this.setCustomValidity('Allowed special characters is * ! @ $ _ ^')" oninput="setCustomValidity('')" {% if customShortenPart is not None %} value="{{customShortenPart}}"{% endif %}>
             
             <button class="btn btn-primary" style="vertical-align: middle;height:50px;width:69%;" type="submit">Submit</button>
             <input class="btn btn-success" style="margin-left:5px;vertical-align: middle;height:50px;width:30%;" type="reset" value="Shorten Another" onClick="window.location.reload()">
