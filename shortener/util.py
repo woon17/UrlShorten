@@ -9,7 +9,7 @@ def getLocalCreateAt(createAt):
     return createAt.replace(tzinfo=pytz.utc).astimezone(local_timezone)
 
 def getDomains():
-    if os.environ['LOCAL_HOST'] == "True":
+    if os.environ['LOCAL_HOST'] == 'True':
         DOMAIN1="http://127.0.0.1:8000/"
         return [DOMAIN1, DOMAIN2]
     else:
@@ -17,7 +17,7 @@ def getDomains():
         return [DOMAIN1]
 
 def getHomeDomain():
-    if os.environ['LOCAL_HOST'] == "True":
+    if os.environ['LOCAL_HOST'] == 'True':
         return "http://localhost:8000/"
     else:
         DOMAIN1="https://myshortenurlapp.herokuapp.com/"
