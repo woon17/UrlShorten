@@ -1,8 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from shortener.models import Shortener
-from shortener.views import DOMAIN1
-
+from shortener.util import getHomeDomain
 # Create your tests here.
 class TestViews(TestCase):
 
@@ -14,6 +13,7 @@ class TestViews(TestCase):
         self.testShortenerNoRandomShortUrl = Shortener.objects.create(long_url="https://www.djangoproject.com/weblog/", random_short_url=None, custom_short_url="weblog")
         self.redirect_shortUrl = reverse('redirect', args=[self.testShortener.random_short_url])
         self.redirect_customUrl = reverse('redirect', args=[self.testShortener.custom_short_url])
+        self.DOMAIN1 = getHomeDomain()
 
     # longUrl is none 
     def test_index1(self):
@@ -27,7 +27,7 @@ class TestViews(TestCase):
         response = self.client.post(self.index_url,{
             "longUrl": self.testShortener.long_url,
             "customShortenPart": "",
-            "domain": DOMAIN1
+            "domain": self.DOMAIN1
         })
         
         self.assertEqual(response.status_code, 200)
@@ -39,7 +39,7 @@ class TestViews(TestCase):
         response = self.client.post(self.index_url,{
             "longUrl": self.testShortenerNoRandomShortUrl.long_url,
             "customShortenPart": "",
-            "domain": DOMAIN1
+            "domain": self.DOMAIN1
         })
         
         self.assertEqual(response.status_code, 200)
@@ -51,7 +51,7 @@ class TestViews(TestCase):
         response = self.client.post(self.index_url,{
             "longUrl": self.newLongUrl,
             "customShortenPart": "",
-            "domain": DOMAIN1
+            "domain": self.DOMAIN1
         })
         
         self.assertEqual(response.status_code, 200)
@@ -63,7 +63,7 @@ class TestViews(TestCase):
         response = self.client.post(self.index_url,{
             "longUrl": self.testShortener.long_url,
             "customShortenPart": self.newCustomShortUrl,
-            "domain": DOMAIN1
+            "domain": self.DOMAIN1
         })
         
         self.assertEqual(response.status_code, 200)
@@ -76,7 +76,7 @@ class TestViews(TestCase):
         response = self.client.post(self.index_url,{
             "longUrl": self.newLongUrl,
             "customShortenPart": self.testShortener.custom_short_url,
-            "domain": DOMAIN1
+            "domain": self.DOMAIN1
         })
         
         self.assertEqual(response.status_code, 200)
@@ -88,7 +88,7 @@ class TestViews(TestCase):
         response = self.client.post(self.index_url,{
             "longUrl": self.newLongUrl,
             "customShortenPart": self.newCustomShortUrl,
-            "domain": DOMAIN1
+            "domain": self.DOMAIN1
         })
         
         self.assertEqual(response.status_code, 200)
@@ -100,7 +100,7 @@ class TestViews(TestCase):
         response = self.client.post(self.index_url,{
             "longUrl": self.testShortener.long_url,
             "customShortenPart": self.testShortener.custom_short_url,
-            "domain": DOMAIN1
+            "domain": self.DOMAIN1
         })
         
         self.assertEqual(response.status_code, 200)
