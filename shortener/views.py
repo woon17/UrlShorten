@@ -7,7 +7,7 @@ from django.http import HttpResponse
 
 from io import BytesIO
 
-DOMAIN1="http://127.0.0.1:8000/"
+DOMAIN1="https://myshortenurlapp.herokuapp.com/"
 DOMAIN2="http://localhost:8000/"
 
 def index(request):
@@ -22,7 +22,7 @@ def index(request):
         domain = sanitizerService.sanitize(domain)
 
         print(f'longUrl: {longUrl}; customShortenPart: {customShortenPart}; domain: {domain};\n\n')
-        context = {"longUrl": longUrl, "customShortenPart": customShortenPart, "domains": [DOMAIN1, DOMAIN2], "domain": domain}
+        context = {"longUrl": longUrl, "customShortenPart": customShortenPart, "domains": [DOMAIN1], "domain": domain}
 
         if longUrl == "" or longUrl is None:
             return render(request, 'shortener/home.html', context)
