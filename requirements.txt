@@ -3,8 +3,11 @@ backports.zoneinfo==0.2.1
 certifi==2021.5.30
 charset-normalizer==2.0.4
 colorama==0.4.4
+coverage==5.5
 Django==3.2.6
+gunicorn==20.1.0
 idna==3.2
+python-dotenv==0.19.0
 pytz==2021.1
 requests==2.26.0
 six==1.16.0
