@@ -4,11 +4,8 @@ from .models import Shortener
 from .shortenService import createRandomShortenPart, saveShortener, updateShortener
 from mysite import sanitizerService
 from django.http import HttpResponse
-
-from io import BytesIO
-
-DOMAIN1="https://myshortenurlapp.herokuapp.com/"
-DOMAIN2="http://localhost:8000/"
+import os
+from .util import getDomains, getHomeDomain
 
 def index(request):
     try:
@@ -22,7 +19,7 @@ def index(request):
         domain = sanitizerService.sanitize(domain)
 
         print(f'longUrl: {longUrl}; customShortenPart: {customShortenPart}; domain: {domain};\n\n')
-        context = {"longUrl": longUrl, "customShortenPart": customShortenPart, "domains": [DOMAIN1], "domain": domain}
+        context = {"longUrl": longUrl, "customShortenPart": customShortenPart, "domains": getDomains(), "domain": domain}
 
         if longUrl == "" or longUrl is None:
             return render(request, 'shortener/home.html', context)
@@ -65,5 +62,5 @@ def redirectUrlview(request, shortened_part):
             shortener = Shortener.objects.get(custom_short_url=shortened_part)
     except Shortener.DoesNotExist:
         # raise Http404('This shorten_url does not exist')
-        return render(request, "shortener/pageNotFound.html")
+        return render(request, "shortener/pageNotFound.html", {"domain": getHomeDomain()})
     return HttpResponseRedirect(shortener.long_url)
