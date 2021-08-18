@@ -1,1 +1,1 @@
-web: gunicorn UrlShorten_Repo.wsgi
+web: gunicorn mysite.wsgi
