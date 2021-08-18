@@ -1,7 +1,7 @@
 env
 *.pyc
 *.sqlite3
-shortener/migrations/*.py
+# shortener/migrations/*.py
 .env
 htmlcov/
 .coverage
