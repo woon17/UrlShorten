@@ -20,4 +20,5 @@ def getHomeDomain():
     if os.environ['LOCAL_HOST'] == "True":
         return "http://localhost:8000/"
     else:
-        return DOMAIN2
+        DOMAIN1="https://myshortenurlapp.herokuapp.com/"
+        return DOMAIN1
