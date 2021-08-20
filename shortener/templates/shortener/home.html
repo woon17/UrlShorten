@@ -12,7 +12,7 @@
           {% csrf_token %}
           <div class="row g-1">
             <label for="longUrl"> Enter a long URL to make a short URL</label>
-            <input type="url" id="longUrl" required="required" name="longUrl" class="form-control" style="vertical-align: middle;height:50px;width:100%" placeholder="Place your long URL" oninvalid="this.setCustomValidity('Please enter your valid long url')" oninput="setCustomValidity('')" {% if longUrl is not None and  longUrl != "" %} value="{{longUrl}}" {% endif %}>
+            <input type="url" id="longUrl" required="required" name="longUrl" class="form-control" style="vertical-align: middle;height:50px;width:100%" placeholder="Place your long URL" oninvalid="this.setCustomValidity('Please enter your valid long url')" oninput="setCustomValidity('')">
             
             <label>Customize your link</label>
             <select id="domain" name="domain" class="form-control" style="vertical-align: middle;height:50px;width:65%;display:inline-block;">
@@ -34,7 +34,7 @@
       </div>
     </div>
   </section>
-   </div>
+  </div>
 </div>
 
 <script>
@@ -58,6 +58,8 @@ async function submitFunction() {
         if(f.reportValidity()) {
           var long = document.getElementById('longUrl').value;
           var cus = document.getElementById('customShortenPart').value;
+          var domain = document.getElementById('domain').value;
+
           let url = "api/getshorturl/" + long + '/' + cus + "tag"
           let response = await fetch(url);
           let json = await response.json();
@@ -94,15 +96,13 @@ async function submitFunction() {
             }
             document.getElementById('longUrl').value= long;
             document.getElementById('customShortenPart').value= cus;
+            document.getElementById('domain').value = domain;
           }
         }
       } catch (e) {
         console.log(e);
       }
     } 
-</script>
-<script>
-
 </script>
 {% endblock body %}
 {% block appFooter %}{% endblock appFooter%}

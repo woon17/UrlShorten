@@ -10,8 +10,9 @@ import json
 from django.http import JsonResponse
 
 def index(request):
-    print(request)
-    return render(request, 'shortener/home.html', {"domains": getDomains()})
+    domain = request.POST.get('domain', None)
+    domain = sanitizerService.sanitize(domain)
+    return render(request, 'shortener/home.html', {"domains": getDomains(), "domain": domain})
 
 def redirectUrlview(request, shortened_part):
     try:
@@ -26,8 +27,6 @@ def redirectUrlview(request, shortened_part):
 
 
 def apiGetShortUrl(request, longUrl, customShortUrl):
-    print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-
     try:
         longUrl = sanitizerService.sanitize(longUrl)
         customShortUrl =customShortUrl.replace("tag", "")
@@ -68,30 +67,5 @@ def apiGetShortUrl(request, longUrl, customShortUrl):
         context["errorMessage"]="Please provide a different customize input."
         return JsonResponse({'success':'true', 'context':context})
 
-    print("success")
     context["errorMessage"]="none"
-
     return JsonResponse({'success':'true', 'context':context})
-
-
-def apiGetLongUrl(request, shortened_part):
-    response_data = []
-    try:
-        data={}
-        if (Shortener.objects.filter(random_short_url=shortened_part).exists()):
-            shortener = Shortener.objects.get(random_short_url=shortened_part)
-        else:
-            shortener = Shortener.objects.get(custom_short_url=shortened_part)
-        data["long_url"]=shortener.long_url
-        data["shortened_part"]=shortener.long_url
-        response_data.append(data)
-        
-    except Shortener.DoesNotExist:
-        # raise Http404('This shorten_url does not exist')
-        print("hrtr")
-        return JsonResponse({'success':'false'}, status=400)
-        # return render(request, "shortener/pageNotFound.html", {"domain": getHomeDomain()})
-    
-    # return HttpResponseRedirect(shortener.long_url)
-    print("success")
-    return JsonResponse({'success':'true', 'data':response_data})
