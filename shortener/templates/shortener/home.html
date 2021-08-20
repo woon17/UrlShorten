@@ -27,39 +27,16 @@
             </select>
             <input type="text" id="customShortenPart" name="customShortenPart" class="form-control" pattern="^[a-zA-Z0-9*!@$_^]+$" maxlength="10" style="margin-left:5px;vertical-align: middle;height:50px;width:34%" placeholder="Customize url" oninvalid="this.setCustomValidity('Allowed special characters is * ! @ $ _ ^')" oninput="setCustomValidity('')">
             
-            <button class="btn btn-primary" style="vertical-align: middle;height:50px;width:69%;" type="button" onClick=saveUtterance() onsubmit="return submitFoo()">Submit</button>
-            <input class="btn btn-success" style="margin-left:5px;vertical-align: middle;height:50px;width:30%;" type="reset" value="Shorten Another" onClick="window.location.reload()">
+            <button class="btn btn-primary" style="vertical-align: middle;height:50px;width:69%;" type="button" onclick=submitFunction() onsubmit="return submitFoo()">Submit</button>
+            <input class="btn btn-success" style="margin-left:5px;vertical-align: middle;height:50px;width:30%;" type="reset" value="Shorten Another" onclick="window.location.reload()">
           </div>
         </form>
       </div>
     </div>
-{% comment %} <script>
-var errorMessage = document.getElementById('errorMessage').value
-console.log("errorMessage: " + errorMessage)
-</script> {% endcomment %}
-    {% comment %} {% if errorMessage %}
-    <div class="alert alert-danger" role="alert">
-      <h2 class="text">ShortenerUrl: </h2>
-      <p>{{errorMessage}}</p>
-    </div>
-    {% endif %}
-
-    {% if shortener is not None %}
-    <div class="alert alert-success">
-      <h2 class="text">ShortenerUrl: </h2>
-      <p>Copy and share to your friends</p>
-      {% if customShortenPart is not None and customShortenPart != "" %}
-        <a href="{{domain}}{{shortener.custom_short_url}}" id="shortenUrl" class="form-control">{{domain}}{{shortener.custom_short_url}}</a>
-      {% else %}
-        <a href="{{domain}}{{shortener.random_short_url}}" id="shortenUrl" class="form-control">{{domain}}{{shortener.random_short_url}}</a>
-      {% endif %}
-      <br>
-      <button onclick="copyToClipboard('shortenUrl')">Copy text</button>
-    </div>
-    {% endif %} {% endcomment %}
   </section>
    </div>
 </div>
+
 <script>
 function copyToClipboard(id) {
   var from = document.getElementById(id);
@@ -71,75 +48,55 @@ function copyToClipboard(id) {
   window.getSelection().removeAllRanges();
  }
 
-  if ( window.history.replaceState ) {
-      window.history.replaceState( null, null, window.location.href );
-  }
+if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href );
+}
 
-{% comment %} function fillFormInput {% endcomment %}
-
-async function saveUtterance() {
+async function submitFunction() {
       try {
-        var long = document.getElementById('longUrl').value;
-        var cus = document.getElementById('customShortenPart').value;
-
-        let url = "api/getshorturl/" + long + '/' + cus + "tag"
-        //alert("url: " + url)
-
-        let response = await fetch(url);
-        let json = await response.json();
-        var errorMessage = json.context.errorMessage
-        var randomShortPart = json.context.randomShortPart
-        var customShortPart = json.context.customShortPart
-        //alert("success1")
-        alert("json:error: " + String(errorMessage) + "\njson:randomShortPart: " + randomShortPart + "\njson:customShortPart: " + customShortPart)
-        if (json.success) {
-          if(document.getElementById("bottomMessgae")!=null){
-            //alert("if")
-            document.getElementById("bottomMessgae").parentNode.removeChild(document.getElementById("bottomMessgae"));
-          }
-          if (errorMessage != "none"){
-            //alert("bottomMessgae: " + document.getElementById("bottomMessgae"))
-            //alert("red error")
-
-            html = "<div class='alert alert-danger' role='alert' id='bottomMessgae'>" + 
-            "<h2 class='text'>ShortenerUrl: </h2>" +
-                      "<p>" + errorMessage + "</p>"
-                    + "</div>";
-	  		     document.getElementById("body").innerHTML += html
-            //alert("suceesss")
-          }else{
-            html1="";
-            //alert("green success")
-            if(cus == ""){
-              alert("else for success for randomShortPart")
-
-              html1 = "<a href=" + document.getElementById('domain').value + randomShortPart + " id='shortenUrl' class='form-control'>"
-              + document.getElementById('domain').value + randomShortPart + "</a>";
-            }else{
-              alert("else for success for customShortenPart")
-              alert(cus)
-
-              html1 = "<a href=" + document.getElementById('domain').value + cus + " id='shortenUrl' class='form-control'>"
-              + document.getElementById('domain').value + cus + "</a>";
-              //alert(html1)
+        var f = document.getElementsByTagName('form')[0];
+        if(f.reportValidity()) {
+          var long = document.getElementById('longUrl').value;
+          var cus = document.getElementById('customShortenPart').value;
+          let url = "api/getshorturl/" + long + '/' + cus + "tag"
+          let response = await fetch(url);
+          let json = await response.json();
+          var errorMessage = json.context.errorMessage
+          var randomShortPart = json.context.randomShortPart
+          var customShortPart = json.context.customShortPart
+          if (json.success) {
+            if(document.getElementById("bottomMessgae")!=null){
+              document.getElementById("bottomMessgae").parentNode.removeChild(document.getElementById("bottomMessgae"));
             }
-          
-            html = "<div class='alert alert-success' id='bottomMessgae'>" + 
+            if (errorMessage != "none"){
+              html = "<div class='alert alert-danger' role='alert' id='bottomMessgae'>" + 
               "<h2 class='text'>ShortenerUrl: </h2>" +
-              "<p>Copy and share to your friends</p>" + html1 + 
-              "<br>" + 
-              "<button onclick=" + "copyToClipboard('shortenUrl')" + ">Copy text</button>" + 
-            "</div>";
-	  		    document.getElementById("body").innerHTML += html
-            //alert("suceesss")
-
+                        "<p>" + errorMessage + "</p>"
+                      + "</div>";
+              document.getElementById("body").innerHTML += html
+            }else{
+              html1="";
+              if(cus == ""){
+                html1 = "<a href=" + document.getElementById('domain').value + randomShortPart + " id='shortenUrl' class='form-control'>"
+                + document.getElementById('domain').value + randomShortPart + "</a>";
+              }else{
+                html1 = "<a href=" + document.getElementById('domain').value + cus + " id='shortenUrl' class='form-control'>"
+                + document.getElementById('domain').value + cus + "</a>";
+              }
+            
+              html = "<div class='alert alert-success' id='bottomMessgae'>" + 
+                "<h2 class='text'>ShortenerUrl: </h2>" +
+                "<p>Copy and share to your friends</p>" + html1 + 
+                "<br>" + 
+                "<button onclick=" + "copyToClipboard('shortenUrl')" + ">Copy text</button>" + 
+              "</div>";
+              document.getElementById("body").innerHTML += html
+            }
+            document.getElementById('longUrl').value= long;
+            document.getElementById('customShortenPart').value= cus;
           }
-          //alert("suceesss2")
-          document.getElementById('longUrl').value= long;
-          document.getElementById('customShortenPart').value= cus;
         }
       } catch (e) {
-        //alert("Please choose an intent");
         console.log(e);
       }
     } 
@@ -148,6 +105,4 @@ async function saveUtterance() {
 
 </script>
 {% endblock body %}
-
-  {% block appFooter %}
-  {% endblock appFooter%}
+{% block appFooter %}{% endblock appFooter%}
