@@ -1,3 +1,4 @@
+from django.db import reset_queries
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Shortener
@@ -10,6 +11,7 @@ import json
 from django.http import JsonResponse
 
 def index(request):
+    print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     domain = request.POST.get('domain', None)
     domain = sanitizerService.sanitize(domain)
     return render(request, 'shortener/home.html', {"domains": getDomains(), "domain": domain})
@@ -28,20 +30,21 @@ def redirectUrlview(request, shortened_part):
 
 def apiGetShortUrl(request, longUrl, customShortUrl):
     try:
+        print("------------response----------------------")
         longUrl = sanitizerService.sanitize(longUrl)
         customShortUrl =customShortUrl.replace("tag", "")
         customShortUrl = sanitizerService.sanitize(customShortUrl)
         print(f'longUrl: {longUrl}; customShortUrl: {customShortUrl};\n\n')
-        context = {"longUrl": longUrl, "customShortUrl": customShortUrl, "domains": getDomains(), "domain": getHomeDomain()}
+        context = {"longUrl": longUrl, "domains": getDomains(), "domain": getHomeDomain()}
 
         if longUrl == "" or longUrl is None:
-            return render(request, 'shortener/home.html', context)
+            context["errorMessage"]="Please provide a valid long url."
+            return JsonResponse({'success':'true', 'context':context})
         else:
             shortenerObj=Shortener.objects.filter(long_url=longUrl)
             if shortenerObj.exists() and shortenerObj[0].custom_short_url == customShortUrl:
                 context["randomShortPart"]=shortenerObj[0].random_short_url
                 context["customShortPart"]=shortenerObj[0].custom_short_url
-                return render(request, 'shortener/home.html', context)
             if shortenerObj.exists():
                 if customShortUrl != "":
                     updateShortener(shortenerObj[0], customShortUrl=customShortUrl)
