@@ -28,7 +28,7 @@
             <input type="text" id="customShortenPart" name="customShortenPart" class="form-control" pattern="^[a-zA-Z0-9*!@$_^]+$" maxlength="10" style="margin-left:5px;vertical-align: middle;height:50px;width:34%" placeholder="Customize url" oninvalid="this.setCustomValidity('Allowed special characters is * ! @ $ _ ^')" oninput="setCustomValidity('')">
             
             <button class="btn btn-primary" style="vertical-align: middle;height:50px;width:69%;" type="button" onclick=submitFunction() onsubmit="return submitFoo()">Submit</button>
-            <input class="btn btn-success" style="margin-left:5px;vertical-align: middle;height:50px;width:30%;" type="reset" value="Shorten Another" onclick="window.location.reload()">
+            <input class="btn btn-success" style="margin-left:5px;vertical-align: middle;height:50px;width:30%;" type="reset" value="Shorten Another" onclick=shortenAnother()>
           </div>
         </form>
       </div>
@@ -50,6 +50,15 @@ function copyToClipboard(id) {
 
 if ( window.history.replaceState ) {
     window.history.replaceState( null, null, window.location.href );
+}
+
+function shortenAnother(){
+  if(document.getElementById("bottomMessgae")!=null){
+    document.getElementById("bottomMessgae").parentNode.removeChild(document.getElementById("bottomMessgae"));
+  }
+  document.getElementById('longUrl').value = ""
+  document.getElementById('customShortenPart').value = ""
+  
 }
 
 async function submitFunction() {
