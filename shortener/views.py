@@ -9,7 +9,9 @@ import os
 from .util import getDomains, getHomeDomain
 import json
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/login/')
 def index(request):
     print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     domain = request.POST.get('domain', None)

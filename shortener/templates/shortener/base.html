@@ -1,5 +1,11 @@
 {% load static %}
-
+<style>
+#helloUser{
+  font-size: 18px;
+  color: #fff;
+  margin-right: 10px;
+}
+</style>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +19,11 @@
   {% block appHeader %}  
   <section class="content-header">
     <div class="container-fluid">
-      <div class="card-header text-center p-3 bg-success my-3 border rounded">
+      <div class="card-header text-center p-5 bg-success my-3 border rounded">
         <h1>URL Shortner Page <i class="fas fa-link px-2"></i></h1>
+          <span style="float:right" id="helloUser">hello, {{ request.user.username}}&nbsp;&nbsp;
+          <a href= "/logout" id="helloUser">LogOut</a>
+          </span>
       </div>
     </div>
   </section>
