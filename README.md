@@ -5,7 +5,7 @@ Submit any URL so that it can be shortened and used/shared
 1. Produce random URL for a long URL
 2. Generate a customised URL according to user's input
 
-## Deployment
+## Deployment (without login and sign up)
 https://myshortenurlapp.herokuapp.com/
 
 ![heroku shortenerUrl](https://github.com/woon17/UrlShorten/blob/main/docs/images/myshortenurlappHeroku.PNG)
