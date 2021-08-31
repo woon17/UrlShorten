@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.messages import info
-
+from .forms import SignUpForm
+from django.http import HttpResponseRedirect
 # Create your views here.
 def loginPage(request):
     context = {}
@@ -24,6 +25,25 @@ def logoutUser(request):
     return redirect('login')
 
 
-def registerPage(request):
-    context = {}
-    return render(request, 'account/register.html', context)
+def singUpNewUser(request):
+    if request.method == 'POST':
+            # create a form instance and populate it with data from the request:
+        form = SignUpForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()  
+            # load the profile instance created by the signal
+            user.save()
+            raw_password = form.cleaned_data.get('password1')
+ 
+            # login user after signing up
+            user = authenticate(username=user.username, password=raw_password)
+            login(request, user)
+            return HttpResponseRedirect("/")
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = SignUpForm()
+
+    return render(request, 'account/signup.html', {'form': form})
