@@ -11,6 +11,6 @@ https://myshortenurlapp.herokuapp.com/
 ![heroku shortenerUrl](https://github.com/woon17/UrlShorten/blob/main/docs/images/myshortenurlappHeroku.PNG)
 ## Unit testing and Coverage
 
-Unit testing: UrlShorten/shortener/tests/ (https://github.com/woon17/UrlShorten/tree/main/shortener/tests)
+Unit testing: UrlShorten/shortener/tests/ (https://github.com/woon17/UrlShorten/tree/master/shortener/tests)
 
-![coverage report](https://github.com/woon17/UrlShorten/blob/main/docs/images/coverageReport.PNG)
+![coverage report](https://github.com/woon17/UrlShorten/blob/master/docs/images/coverageReport.PNG)
