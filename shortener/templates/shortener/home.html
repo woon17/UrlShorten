@@ -94,14 +94,14 @@ async function submitFunction() {
               document.getElementById("bottomMessgae").parentNode.removeChild(document.getElementById("bottomMessgae"));
             }
             if (errorMessage != "none"){
-              if (errorMessage.includes("UNIQUE constraint failed: shortener_shortener.custom_short_url")){
-                errorMessage = errorMessage.split("FOR DEVELOPER")[0];
-              }
-              
               if (errorMessage.includes("DETAIL: Key (custom_short_url)=")){
                 errorMessage = errorMessage.split("FOR DEVELOPER")[0];
               }
 
+              if (errorMessage.includes("UNIQUE constraint failed: shortener_shortener.custom_short_url")){
+                errorMessage = errorMessage.split("FOR DEVELOPER")[0];
+              }
+              
               html = "<div class='alert alert-danger' role='alert' id='bottomMessgae'>" + 
               "<h2 class='text'>ShortenerUrl: </h2>" +
                         "<p>" + errorMessage + "</p>"
