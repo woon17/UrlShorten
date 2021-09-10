@@ -30,12 +30,13 @@ def redirectUrlview(request, shortened_part):
     return HttpResponseRedirect(shortener.long_url)
 
 
-def apiGetShortUrl(request, longUrl, customShortUrl):
+def apiGetShortUrl(request):
     try:
-        print("------------response----------------------")
-        longUrl = sanitizerService.sanitize(longUrl)
-        customShortUrl =customShortUrl.replace("tag", "")
-        customShortUrl = sanitizerService.sanitize(customShortUrl)
+        
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        customShortUrl = sanitizerService.sanitize(body.get('cus'))
+        longUrl = body.get('long')
         print(f'longUrl: {longUrl}; customShortUrl: {customShortUrl};\n\n')
         context = {"longUrl": longUrl, "domains": getDomains(), "domain": getHomeDomain()}
 

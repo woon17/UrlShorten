@@ -5,7 +5,7 @@ from .util import getLocalCreateAt
 # Create your models here.
 class Shortener(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
-    long_url = models.URLField(max_length=31, unique=True, blank=True)
+    long_url = models.URLField(max_length=100, unique=True, blank=True)
     random_short_url = models.CharField(max_length=10, unique=True, blank=True, null=True)
     custom_short_url = models.CharField(max_length=10, unique=True, blank=True, null=True)
 
