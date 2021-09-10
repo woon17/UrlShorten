@@ -12,7 +12,7 @@
           {% csrf_token %}
           <div class="row g-1">
             <label for="longUrl"> Enter a long URL to make a short URL</label>
-            <input type="url" id="longUrl" required="required" name="longUrl" class="form-control" style="vertical-align: middle;height:50px;width:100%" placeholder="Place your long URL" oninvalid="this.setCustomValidity('Please enter your valid long url')" oninput="setCustomValidity('')">
+            <input type="url" id="longUrl" required="required" name="longUrl" class="form-control" maxlength="100" style="vertical-align: middle;height:50px;width:100%" placeholder="Place your long URL" oninvalid="this.setCustomValidity('Please enter your valid long url')" oninput="setCustomValidity('')">
             
             <label>Customize your link</label>
             <select id="domain" name="domain" class="form-control" style="vertical-align: middle;height:50px;width:65%;display:inline-block;">
