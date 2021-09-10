@@ -94,8 +94,11 @@ async function submitFunction() {
               document.getElementById("bottomMessgae").parentNode.removeChild(document.getElementById("bottomMessgae"));
             }
             if (errorMessage != "none"){
-              alert(errorMessage.includes("UNIQUE constraint failed: shortener_shortener.custom_short_url"))
               if (errorMessage.includes("UNIQUE constraint failed: shortener_shortener.custom_short_url")){
+                errorMessage = errorMessage.split("FOR DEVELOPER")[0];
+              }
+              
+              if (errorMessage.includes("duplicate key value violates unique constraint "shortener_shortener_custom_short_url_key" DETAIL: Key (custom_short_url)=")){
                 errorMessage = errorMessage.split("FOR DEVELOPER")[0];
               }
               html = "<div class='alert alert-danger' role='alert' id='bottomMessgae'>" + 
