@@ -86,7 +86,7 @@ async function submitFunction() {
           }
           let response = await fetch(url, config);
           let json = await response.json();
-          var errorMessage = json.context.errorMessage
+          var errorMessage = json.context.errorMessage;
           var randomShortPart = json.context.randomShortPart
           var customShortPart = json.context.customShortPart
           if (json.success) {
@@ -94,6 +94,10 @@ async function submitFunction() {
               document.getElementById("bottomMessgae").parentNode.removeChild(document.getElementById("bottomMessgae"));
             }
             if (errorMessage != "none"){
+              alert(errorMessage.includes("UNIQUE constraint failed: shortener_shortener.custom_short_url"))
+              if (errorMessage.includes("UNIQUE constraint failed: shortener_shortener.custom_short_url")){
+                errorMessage = errorMessage.split("FOR DEVELOPER")[0];
+              }
               html = "<div class='alert alert-danger' role='alert' id='bottomMessgae'>" + 
               "<h2 class='text'>ShortenerUrl: </h2>" +
                         "<p>" + errorMessage + "</p>"

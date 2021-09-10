@@ -70,7 +70,7 @@ def apiGetShortUrl(request):
     except Exception as e:
         print("hrtr")
         print(f'Exception: {e}')
-        context["errorMessage"]=str(e) + " Please provide a different customize input."
+        context["errorMessage"]=" Please provide a different customize input." + "<br><br><br>" +"FOR DEVELOPER: " + str(e) 
         return JsonResponse({'success':'true', 'context':context})
 
     context["errorMessage"]="none"
