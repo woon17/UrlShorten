@@ -87,8 +87,8 @@ async function submitFunction() {
           let response = await fetch(url, config);
           let json = await response.json();
           var errorMessage = json.context.errorMessage;
-          var randomShortPart = json.context.randomShortPart
-          var customShortPart = json.context.customShortPart
+          var randomShortPart = json.context.randomShortPart;
+          var customShortPart = json.context.customShortPart;
           if (json.success) {
             if(document.getElementById("bottomMessgae")!=null){
               document.getElementById("bottomMessgae").parentNode.removeChild(document.getElementById("bottomMessgae"));
@@ -101,6 +101,7 @@ async function submitFunction() {
               if (errorMessage.includes("DETAIL: Key (custom_short_url)=")){
                 errorMessage = errorMessage.split("FOR DEVELOPER")[0];
               }
+
               html = "<div class='alert alert-danger' role='alert' id='bottomMessgae'>" + 
               "<h2 class='text'>ShortenerUrl: </h2>" +
                         "<p>" + errorMessage + "</p>"
